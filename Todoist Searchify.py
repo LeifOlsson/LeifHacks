@@ -1,3 +1,4 @@
+# Python3
 # -*- coding: utf-8 -*-
 import todoist, os
 from urllib import quote
@@ -6,6 +7,9 @@ from urllib import quote
 Instructions:
 1. Create a Todoist label "searchify" or change the user var "customLabelName" below to a name you prefer.
 	!! This label will be REMOVED from all tasks during this script! Do not use a label you use for any other purpose.
+	!! Unless you change searchCompletedTasks in user vars below, All COMPLETED tasks with this label will be un-completed!
+		This is for IFTTT compatibility: The "completed" trigger is the only way to indicate a task at any point after its creation.
+		You can complete tasks again once this script has removed the tag, and they will stay completed.
 2. Optional: Change the user var "customSearchEngine" below to any url of your choice as long as the name of your task can be appended as the search parameter:
 	customSearchEngine = "https://duckduckgo.com/?q="
 3. Get your Todoist API Key from here:
@@ -19,6 +23,7 @@ Instructions:
 customLabelName = 'searchify' #Match tasks with this task label.
 customSearchEngine = "https://www.google.com/search?q=" #Link is made from this string followed by the task name, url-encoded.
 apiToken = "" #Paste your API token here to skip reading it from a file.
+searchCompletedTasks = 2 #If 0, completed tasks with the tag will be ignored. If 1, completed tasks will be linkified but REMAIN completed. If 2, they will be un-completed after linkification. 
 
 
 #### FUNCTIONS ####
@@ -39,7 +44,7 @@ def get_items_with_label(labelId, itemList):
 	list = []
 	for item in itemList:
 		if labelId in item['labels']:
-			if item_is_still_alive(item):
+			if (searchCompletedTasks > 0 or item_is_still_alive(item)):
 				list.append(item)
 	return(list)
 
@@ -85,6 +90,7 @@ for eachItem in matchedItems:
 	eachItem['labels'].remove(aLabel['id'])
 	#Apply changes to local instance:
 	api.items.get_by_id(eachItem['id']).update(content=taskName, labels=eachItem['labels'])
+	if searchCompletedTasks == 2: api.items.get_by_id(eachItem['id']).update(is_deleted=0, in_history=0)
 	updatedCount += 1
 
 #Commit:
