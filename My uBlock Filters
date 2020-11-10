@@ -1,0 +1,39 @@
+!"+js()" filters require "uBO-Scriptlets" in your userResourcesLocation:
+!https://raw.githubusercontent.com/uBlock-user/uBO-Scriptlets/master/scriptlets.js
+
+!Todoist!
+!Minimal Project Header:
+todoist.com##div[data-full-editor="true"]>div>div>.view_header:style(padding: 3px 55px 0px !important)
+todoist.com##.view_header:style(padding: 43px 55px 0px !important)
+todoist.com##.board_view__sections:style(height:calc(100vh - 78px) !important)
+!Theme color override:
+todoist.com##+js(set-attr,content,#c4d8dd,meta[name=theme-color])
+!Board View Color Coding:
+todoist.com##.board_task:has(button[class="task_checkbox priority_4"]):style(border: 3px solid red !important; background-color: #fff0f0 !important)
+todoist.com##.board_task:has(button[class="task_checkbox priority_3"]):style(border: 3px solid orange !important; background-color: #fffbf9 !important)
+todoist.com##.board_task:has(button[class="task_checkbox priority_2"]):style(border: 3px solid blue !important; background-color: #FAFCFF !important)
+todoist.com##.board_task:has(button[class="task_checkbox priority_1"]):style(border: 3px solid black !important; background-color: #FAFAFA !important)
+todoist.com##.board_task:not(:has([class="board_task__details__checkbox"])):style(border: 3px solid black !important; background-color: #888 !important; color: #FFFFFF !important)
+todoist.com##.board_task:style(margin-bottom:0px !important; padding:5px !important; width: 100% !important)
+todoist.com##.board_section__section_info:style(height:20px !important)
+todoist.com##.board_section__header:style(flex-basis: 20px !important; height: 0px !important; padding-left: 0px !important)
+todoist.com##.board_section:style(margin-right:0px !important)
+todoist.com##.board_section__task_list:style(padding:0px !important; overflow-y: auto !important)
+
+!!!
+
+!Twitter.com!
+!Remove distraction boxes:
+twitter.com##.trends.Trends
+twitter.com##.module.RelatedUsers
+twitter.com##.SignupCallOut
+twitter.com##.ProfileCanopy
+twitter.com##div.r-1udh08x.r-ku1wi2.r-rs99b7.r-1phboty.r-1867qdf.r-9cbz99.r-1u4rsef.css-1dbjc4n 
+twitter.com##div.r-1udh08x.r-ku1wi2.r-rs99b7.r-1phboty.r-1867qdf.r-k0dy70.r-1ysxnx4.css-1dbjc4n
+!Kill the right sidebar, move search box to floating in center column header:
+twitter.com##.r-1j3t67a.r-1w6e6rj.r-18u37iz.css-1dbjc4n
+twitter.com##.r-1jocfgc:style(z-index:4 !important)
+twitter.com##.css-1dbjc4n.r-1l5qxre.r-m611by:style(position:fixed !important)
+twitter.com##.css-1dbjc4n.r-1l5qxre.r-m611by:style(left:380px !important)
+! Beveled icons with outlines:
+twitter.com##.r-sdzlij:style(border-radius:3px !important)
